@@ -17,6 +17,8 @@ VHDL Source: [olo_base_crc_append](../../src/base/vhdl/olo_base_crc_append.vhd)
 This component does calculate and append a CRC checksum to AXI4-Stream packets. Together with _olo_base_crc_check_ it
 can be used to CRC protect any data stream.
 
+![Overview](./misc/olo_base_crc_chain_bd.drawio.png)
+
 The CRC to append to the packet must be smaller or equal to the width of the data stream (_DataWidth_g_). If the CRC
 is smaller, the CRC placend in the LSBs of the data word and the remaining MSBs are filled with zeros.
 
@@ -26,6 +28,12 @@ for details.
 Below waveform shows an example use-case.
 
 ![wave](./misc/olo_base_crc_append.png)
+
+Note that the exact latency might be different. The important point in the figure are:
+
+- There are no bubble cycles in the output stream
+- There is one stall cycle per packet in the input stream (when CRC is appended)
+- Input and output support full AXI4-Stream handshaking (Ready/Valid)
 
 ## Generics
 
@@ -80,4 +88,4 @@ specifications.
 
 The architecture is relatively trivial thanks to the already existing _olo_base_crc_ component.
 
-![Overview](./misc/olob_ase_crc_append_bd.drawio.png)
+![Overview](./misc/olo_base_crc_append_bd.drawio.png)
